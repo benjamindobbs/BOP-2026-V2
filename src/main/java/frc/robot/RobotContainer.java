@@ -119,8 +119,7 @@ public class RobotContainer {
                                                 });
 
                                 vision = new Vision(drive::addVisionMeasurement,
-                                                new VisionIOLimelight("limelight-shooter", drive::getRotation),
-                                                new VisionIOLimelight("limelight-intake", drive::getRotation));
+                                                new VisionIOLimelight("limelight-bop", drive::getRotation));
                                 break;
                 }
 
@@ -133,15 +132,13 @@ public class RobotContainer {
                 hood,
                 hanger
                 );
-                // Set up auto routines
-                autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
                 //register named commands
                 NamedCommands.registerCommand("aimAndShoot", subsystemCommands.aimAndShoot().withTimeout(10));
                 NamedCommands.registerCommand("deployIntake", intake.intakeCommand());
                 NamedCommands.registerCommand("stowIntake", intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
-
-
-                
+                // Set up auto routines
+                autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
                 // Configure the button bindings
                 configureButtonBindings();
@@ -167,7 +164,7 @@ public class RobotContainer {
                                                 drive,
                                                 () -> -controller.getLeftY(),
                                                 () -> -controller.getLeftX(),
-                                                () -> controller.getRightX()));
+                                                () -> -controller.getRightX()));
 
                 RobotModeTriggers.autonomous().or(RobotModeTriggers.teleop())
                                 .onTrue(intake.homingCommand())
