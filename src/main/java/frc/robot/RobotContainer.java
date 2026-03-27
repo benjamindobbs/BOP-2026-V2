@@ -20,6 +20,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -142,6 +143,11 @@ public class RobotContainer {
                 NamedCommands.registerCommand("lowerClimber", hanger.positionCommand(Hanger.Position.HUNG));
                 // Set up auto routines
                 autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
+
+                autoChooser.addOption("Crazy Mode", new PathPlannerAuto("Crazy Mode"));
+                autoChooser.addOption("Step Back Jumper", new PathPlannerAuto("Step Back Jumper"));
+                autoChooser.addOption("Test", new PathPlannerAuto("Test"));
 
                 // Configure the button bindings
                 configureButtonBindings();
