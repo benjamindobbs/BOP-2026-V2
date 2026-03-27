@@ -33,9 +33,15 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "deployIntake",
-      "waypointRelativePos": 0.22841726618705122,
+      "name": "Deploy Intake",
+      "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "Aim And Shoot",
+      "waypointRelativePos": 0.2642857142857144,
+      "endWaypointRelativePos": 0.2642857142857144,
       "command": null
     }
   ],

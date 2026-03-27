@@ -20,6 +20,9 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.auto.CommandUtil;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.events.TriggerEvent;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -141,6 +144,15 @@ public class RobotContainer {
                 NamedCommands.registerCommand("stowIntake", intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
                 NamedCommands.registerCommand("raiseClimber", hanger.positionCommand(Hanger.Position.HANGING));
                 NamedCommands.registerCommand("lowerClimber", hanger.positionCommand(Hanger.Position.HUNG));
+
+                //register event triggers
+                new EventTrigger("Aim And Shoot").whileTrue(subsystemCommands.aimAndShoot());
+                new EventTrigger("Run Intake").whileTrue(intake.intakeCommand());
+                new EventTrigger("Deploy Intake").onTrue(intake.runOnce(() -> intake.set(Intake.Position.INTAKE)));
+                new EventTrigger("Stowe Intake").onTrue(intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
+                new EventTrigger("Raise Climber").onTrue(hanger.positionCommand(Hanger.Position.HANGING));
+                new EventTrigger("Lower Climber").onTrue(hanger.positionCommand(Hanger.Position.HUNG));
+
                 // Set up auto routines
                 autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
@@ -148,6 +160,7 @@ public class RobotContainer {
                 autoChooser.addOption("Crazy Mode", new PathPlannerAuto("Crazy Mode"));
                 autoChooser.addOption("Step Back Jumper", new PathPlannerAuto("Step Back Jumper"));
                 autoChooser.addOption("Test", new PathPlannerAuto("Test"));
+                autoChooser.addOption("Shoot And Climb", new PathPlannerAuto("Shoot And Climb"));
 
                 // Configure the button bindings
                 configureButtonBindings();

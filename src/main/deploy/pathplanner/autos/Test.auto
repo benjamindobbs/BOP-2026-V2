@@ -9,18 +9,6 @@
           "data": {
             "pathName": "Straight Back"
           }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 5.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "runIntake"
-          }
         }
       ]
     }
