@@ -15,12 +15,6 @@
           "data": {
             "name": "deployIntake"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aimAndShoot"
-          }
         }
       ]
     }

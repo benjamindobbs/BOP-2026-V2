@@ -136,7 +136,10 @@ public class RobotContainer {
                 //register named commands
                 NamedCommands.registerCommand("aimAndShoot", subsystemCommands.aimAndShoot().withTimeout(10));
                 NamedCommands.registerCommand("deployIntake", intake.intakeCommand());
+                NamedCommands.registerCommand("runIntake", intake.intakeCommand().withTimeout(5));
                 NamedCommands.registerCommand("stowIntake", intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
+                NamedCommands.registerCommand("raiseClimber", hanger.positionCommand(Hanger.Position.HANGING));
+                NamedCommands.registerCommand("lowerClimber", hanger.positionCommand(Hanger.Position.HUNG));
                 // Set up auto routines
                 autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
