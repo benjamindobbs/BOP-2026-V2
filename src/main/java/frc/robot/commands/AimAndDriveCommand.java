@@ -70,7 +70,7 @@ public class AimAndDriveCommand extends Command {
     @Override
     public void execute() {
         final ManualDriveInput input = inputSmoother.getSmoothedInput();
-        
+
 
 
       // Convert to field relative speeds & send command

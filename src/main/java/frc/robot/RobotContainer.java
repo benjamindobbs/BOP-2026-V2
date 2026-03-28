@@ -29,6 +29,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.DriveCommands;
@@ -144,24 +145,21 @@ public class RobotContainer {
                 NamedCommands.registerCommand("stowIntake", intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
                 NamedCommands.registerCommand("raiseClimber", hanger.positionCommand(Hanger.Position.HANGING));
                 NamedCommands.registerCommand("lowerClimber", hanger.positionCommand(Hanger.Position.HUNG));
+                NamedCommands.registerCommand("HomeIntake",homeSubsystems());
 
                 //register event triggers
-                new EventTrigger("Aim And Shoot").whileTrue(subsystemCommands.aimAndShoot());
-                new EventTrigger("Run Intake").whileTrue(intake.intakeCommand());
-                new EventTrigger("Deploy Intake").onTrue(intake.runOnce(() -> intake.set(Intake.Position.INTAKE)));
-                new EventTrigger("Stowe Intake").onTrue(intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
-                new EventTrigger("Raise Climber").onTrue(hanger.positionCommand(Hanger.Position.HANGING));
-                new EventTrigger("Lower Climber").onTrue(hanger.positionCommand(Hanger.Position.HUNG));
+                // new EventTrigger("Aim And Shoot").whileTrue(subsystemCommands.aimAndShoot());
+                // new EventTrigger("Run Intake").whileTrue(intake.intakeCommand());
+                // new EventTrigger("Deploy Intake").onTrue(intake.runOnce(() -> intake.set(Intake.Position.INTAKE)));
+                // new EventTrigger("Stowe Intake").onTrue(intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
+                // new EventTrigger("Raise Climber").onTrue(hanger.positionCommand(Hanger.Position.HANGING));
+                // new EventTrigger("Lower Climber").onTrue(hanger.positionCommand(Hanger.Position.HUNG));
 
                 // Set up auto routines
                 autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
 
-                autoChooser.addOption("Crazy Mode", new PathPlannerAuto("Crazy Mode"));
-                autoChooser.addOption("Step Back Jumper", new PathPlannerAuto("Step Back Jumper"));
                 autoChooser.addOption("Test", new PathPlannerAuto("Test"));
-                autoChooser.addOption("Shoot And Climb", new PathPlannerAuto("Shoot And Climb"));
-
                 // Configure the button bindings
                 configureButtonBindings();
 
@@ -188,9 +186,9 @@ public class RobotContainer {
                                                 () -> -controller.getLeftX(),
                                                 () -> -controller.getRightX()));
 
-                RobotModeTriggers.autonomous().or(RobotModeTriggers.teleop())
-                                .onTrue(intake.homingCommand())
-                                .onTrue(hanger.homingCommand());
+                // RobotModeTriggers.autonomous().or(RobotModeTriggers.teleop())
+                //                 .onTrue(intake.homingCommand())
+                //                 .onTrue(hanger.homingCommand());
 
                 controller.rightTrigger().whileTrue(subsystemCommands.aimAndShoot());
                 controller.rightBumper().whileTrue(subsystemCommands.shootManually());
@@ -201,6 +199,10 @@ public class RobotContainer {
                 controller.povDown().onTrue(hanger.positionCommand(Hanger.Position.HUNG));
         }
 
+
+        public Command homeSubsystems(){
+                return new RunCommand(()->intake.homingCommand()).alongWith(hanger.homingCommand());
+        }
         
         /**
          * Use this to pass the autonomous command to the main {@link Robot} class.

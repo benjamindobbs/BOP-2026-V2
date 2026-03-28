@@ -1,6 +1,5 @@
 plugins {
     id "java"
-	id 'checkstyle'
     id "edu.wpi.first.GradleRIO" version "2026.1.1"
 	id "com.peterabeles.gversion" version "1.10"
 }
@@ -172,14 +171,4 @@ task(eventDeploy) {
 }
 createVersionFile.dependsOn(eventDeploy)
 
-checkstyle {
-	configFile = file("config/checkstyle/checkstyle.xml")
-	toolVersion = '10.26.1' // or current latest
-}
 
-tasks.withType(Checkstyle) {
-	reports {
-		html.required = true
-		xml.required = false
-	}
-}

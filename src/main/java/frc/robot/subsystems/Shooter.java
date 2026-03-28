@@ -7,6 +7,8 @@ import static edu.wpi.first.units.Units.Volts;
 
 import java.util.List;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -136,5 +138,12 @@ public class Shooter extends SubsystemBase {
         builder.addStringProperty("Command", () -> getCurrentCommand() != null ? getCurrentCommand().getName() : "null", null);
         builder.addDoubleProperty("Dashboard RPM", () -> dashboardTargetRPM, value -> dashboardTargetRPM = value);
         builder.addDoubleProperty("Target RPM", () -> velocityRequest.getVelocityMeasure().in(RPM), null);
+    }
+
+    @Override
+    public void periodic(){
+        Logger.recordOutput("Shooter/LeftMotor/Velocity",leftMotor.getVelocity().getValueAsDouble());
+        Logger.recordOutput("Shooter/MiddleMotor/Velocity",middleMotor.getVelocity().getValueAsDouble());
+        Logger.recordOutput("Shooter/RightMotor/Velocity",rightMotor.getVelocity().getValueAsDouble());
     }
 }

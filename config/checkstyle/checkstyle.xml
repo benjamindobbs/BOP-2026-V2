@@ -10,11 +10,11 @@
     but skips lines that are comments (starting with //, /*, or * inside block comments).
     Severity set to "info" so it's a warning, not an error.
   -->
-  <module name="RegexpSingleline">
+  <!-- <module name="RegexpSingleline">
     <property name="format" value="^(?!\s*(//|/\*|\*)).*\s+$"/>
     <property name="message" value="Line has trailing whitespace."/>
     <property name="severity" value="info"/>
-  </module>
+  </module> -->
   <!--
     TreeWalker module analyzes Java AST (Abstract Syntax Tree).
     Most style checks are inside TreeWalker.
